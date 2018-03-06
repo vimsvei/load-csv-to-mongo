@@ -3,6 +3,10 @@ package org.vimsvei.model;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import de.svenjacobs.loremipsum.LoremIpsum;
+
+import java.util.Random;
+
 public class Item {
     public String type;
 
@@ -37,19 +41,24 @@ public class Item {
     		nasted.processes = array[7];
         this.nasted = nasted;
 
-        ItemText text = new ItemText();
-        text._ru = array[8];
-        text._en = "";
-        this.name = text;
+        LoremIpsum loremIpsum = new LoremIpsum();
 
-        text._ru = array[8];
-        text._en = "";
-        this.description = text;
+        ItemText name = new ItemText();
+        name._ru = array[8];
+        name._en = array[9];
+        this.name = name;
+
+        ItemText description = new ItemText();
+        description._ru = loremIpsum.getWords(new Random().nextInt(60)+20, new Random().nextInt(20)+2);
+        description._en = loremIpsum.getWords(new Random().nextInt(60)+20, new Random().nextInt(20)+2);
+        this.description = description;
 
     }
 
     public Document toDocument() {
+
         Document document = new Document();
+
         document.put("type", this.type);
         document.put("code", this.code);
         document.put("parent", this.parent.toDocument());

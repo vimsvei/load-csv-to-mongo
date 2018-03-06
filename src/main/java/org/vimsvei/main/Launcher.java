@@ -33,17 +33,17 @@ public class Launcher {
                 collection = database.getCollection("processes");
             }
 
-//            List<Item> items = new ArrayList<Item>();
+            List<Document> documents = new ArrayList<Document>();
 
             BufferedReader reader = new BufferedReader(new FileReader(FILE_CSV));
             while ((line = reader.readLine()) != null) {
                 String[] array = line.split(SIGN_CSV);
                 Item item = new Item(array);
-//                items.add(item);
-                collection.insertOne(item.toDocument());
+                documents.add(item.toDocument());
+//                collection.insertOne(item.toDocument());
             }
 
-//            collection.insertMany(items);
+            collection.insertMany(documents);
 
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
